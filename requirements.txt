@@ -1,0 +1,42 @@
+# Core dependencies
+fastapi
+uvicorn[standard]
+streamlit
+pydantic
+python-multipart
+
+# Data processing
+pandas
+numpy
+scikit-learn
+
+# File processing
+pdfminer.six
+python-docx
+docx2txt
+
+# AI/ML - Core NLP and ML libraries
+sentence-transformers
+torch
+transformers
+huggingface-hub
+
+# Visualization
+plotly
+
+# Configuration
+pyyaml
+
+# HTTP requests
+requests
+
+# Date/time handling
+python-dateutil
+
+# Database & Authentication
+sqlalchemy
+alembic
+psycopg2-binary
+redis
+python-jose[cryptography]
+passlib[bcrypt]
