@@ -30,9 +30,20 @@ app.add_middleware(
 )
 
 # Initialize components
-pipeline = ProcessingPipeline()
-matcher = ResumeMatcher()
+_pipeline = None
+_matcher = None
 
+def get_pipeline():
+    global _pipeline
+    if _pipeline is None:
+        _pipeline = ProcessingPipeline()
+    return _pipeline
+
+def get_matcher():
+    global _matcher
+    if _matcher is None:
+        _matcher = ResumeMatcher()
+    return _matcher
 # Create database tables on startup
 @app.on_event("startup")
 async def startup_event():

@@ -1,0 +1,31 @@
+# 1. Use Python 3.11 (Highly stable for AI)
+FROM python:3.11-slim
+
+# 2. Set the working directory
+WORKDIR /app
+
+# 3. Install system dependencies for handling PDFs and images
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    software-properties-common \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# 4. Copy requirements and install
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 5. Copy the rest of your project
+COPY . .
+
+# 6. Create the upload folder and give permissions
+RUN mkdir -p data/uploads && chmod -R 777 data
+
+# 7. Hugging Face uses port 7860 for the UI
+EXPOSE 7860
+
+# 8. Start both: Backend (8000) and Streamlit Frontend (7860)
+# We use '&' to run the API in the background while Streamlit runs in the foreground
+CMD uvicorn app.api:app --host 0.0.0.0 --port 8000 & \
+    streamlit run ui/app.py --server.port 7860 --server.address 0.0.0.0
